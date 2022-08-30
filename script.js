@@ -24,6 +24,12 @@ const songList=[
         album: "Eminem",
         duration: "3:32"
     },
+    {
+        imageLink: "./assets/DJ Spizdil.jfif",
+        title: "Malo Tebya (Hardstyle Remix)",
+        album: "DJ Spizdil",
+        duration:"2:46"
+   },
 ];
 
 window.onload = function() {
