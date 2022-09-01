@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     width: 100%;
+    color: black;
 }
 .melody > .song-cover{
     height: 50px;
@@ -22,4 +23,7 @@
 }
 .song-duration {
      width: 20%;
+}
+.melody > * {
+    color: black;
 }

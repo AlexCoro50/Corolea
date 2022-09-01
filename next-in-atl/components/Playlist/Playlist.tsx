@@ -56,7 +56,10 @@ export const Playlist = function () {
                     </span>
 </div>
             <div id="songs-wrapper" className={styles["songs"]}>
-                 <Song index={1} songInfo={songList[0]}/>
+                 {/*<Song index={1} songInfo={songList[0]}/>*/}
+                 {songList.map(function (details,index){
+                 return <Song index={index + 1} songInfo={details} />
+                })}
             </div>
         </div>
     );

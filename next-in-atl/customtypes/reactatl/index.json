@@ -1,0 +1,9 @@
+{
+  "id": "reactatl",
+  "label": "ReactATL",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {}
+  }
+}
