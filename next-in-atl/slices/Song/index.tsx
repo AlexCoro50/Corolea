@@ -11,7 +11,7 @@ interface IImage {
   copyright: string | null;
   url: string;
 }
-interface IPrimary {
+export interface IPrimary {
   title: string;
   album: string;
   cover: IImage;
@@ -20,7 +20,7 @@ interface IPrimary {
     url: string;
   }
 }
-interface IProps {
+export interface IProps {
   slice: {primary: IPrimary};
 }
 const Song = ({ slice }: IProps) => {

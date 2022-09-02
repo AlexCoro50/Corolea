@@ -1,6 +1,9 @@
+import { SliceLike, SliceZone, SliceZoneLike } from "@prismicio/react"
 import React from "react";
+import { IPrimary } from "../../slices/Song";
 import {ISongInfo, Song} from "../Song/Song";
 import styles from"./Playlist.module.scss";
+import { components } from "../../slices";
 
 const songList: ISongInfo[] = [
     {
@@ -34,7 +37,11 @@ const songList: ISongInfo[] = [
        duration:"2:46"
   },
 ];
-export const Playlist = function () {
+interface IPlaylist {
+ slices: SliceZoneLike<SliceLike<string>>;
+ setSong: (data: IPrimary) => void;
+}
+export const Playlist = function (props: IPlaylist) {
 
     return (
         <div className={styles.playlist}>
@@ -57,9 +64,10 @@ export const Playlist = function () {
 </div>
             <div id="songs-wrapper" className={styles["songs"]}>
                  {/*<Song index={1} songInfo={songList[0]}/>*/}
-                 {songList.map(function (details,index){
+                 {/* {songList.map(function (details,index){
                  return <Song index={index + 1} songInfo={details} />
-                })}
+                })} */}
+                <SliceZone slices={props.slices} components={components} />
             </div>
         </div>
     );

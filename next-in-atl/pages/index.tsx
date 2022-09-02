@@ -1,10 +1,21 @@
+import { SliceLike, SliceZoneLike } from "@prismicio/react"
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { FunctionComponent, useState } from 'react'
+import { BottomBar } from "../components/BottomBar/BottomBar"
 import { Playlist } from '../components/Playlist/Playlist'
+import { createClient } from '../prismicio'
+import { IPrimary } from "../slices/Song"
 import styles from '../styles/Home.module.css'
 
-const Home: NextPage = () => {
+interface IProps {
+  songs: SliceZoneLike<SliceLike<string>>;
+}
+
+const Home: FunctionComponent<IProps> = (props: IProps) => {
+  // @ts-ignore
+  const [currentSong, setCurrentSong] = useState(props.songs[0].primary);
   return (
     <div className={styles.container}>
       <Head>
@@ -13,9 +24,30 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <Playlist />
+      <Playlist slices={props.songs} setSong={(data: IPrimary) => setCurrentSong(data)}/>
+      <BottomBar songInfo={currentSong} changeNext={() => { }} changePrev={() => { }}/>
     </div>
   )
+}
+
+
+export const getServerSideProps = async () => {
+  let notFound = false;
+  let data;
+  const client = createClient();
+  
+  try {
+    data = await client.getByUID("spotify", "main");
+  } catch (e) {
+    console.error("The playlist was not found");
+    notFound = true;
+  }
+  console.dir(data, {depth: null });
+
+  return {
+    props: { songs: data?.data.slices },
+    notFound: notFound
+  }
 }
 
 export default Home
