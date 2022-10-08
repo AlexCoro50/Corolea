@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { PrismicRichText } from '@prismicio/react'
 import styles from "./Song.module.scss"
+import { ISliceContext } from '../../components/Playlist/Playlist';
 
 interface IImage {
   dimensions: {
@@ -22,14 +23,28 @@ export interface IPrimary {
 }
 export interface IProps {
   slice: {primary: IPrimary};
+  context: ISliceContext;
 }
-const Song = ({ slice }: IProps) => {
-  console.log(slice);
-  
+
+const Song = ({ slice, context }: IProps) => {
+  const setSong = context.setSong;
+  const songsList = context.songsList;
+  const [index, setIndex] = useState(songsList.findIndex(searchSong => searchSong.title === slice.primary.title && searchSong.album === slice.primary.album));
+  const [duration, setDuration] = useState(0);
+
+  useEffect(() => {
+    const audio = slice?.primary?.songLink && typeof Audio !== "undefined" && new Audio(slice?.primary?.songLink?.url);
+    if (audio) {
+      audio.preload = "metadata";
+      audio.onloadedmetadata = () => setDuration(audio.duration);
+    }
+  }, []);
+
+
   return (
-    <div className={styles["melody"]}>
+    <div className={styles["melody"]} onClick={() => setSong(index)}>
         <span className={styles["song-nr"]}>
-            1
+            {index + 1}
         </span>
         <img src={slice.primary.cover.url} className={styles["song-cover"]}/>
         <span className={styles["song-title"]}>
@@ -39,10 +54,17 @@ const Song = ({ slice }: IProps) => {
             {slice.primary.album}
         </span>
         <span className={styles["song-duration"]}>
-            -
+            {`${Math.floor(duration/60)}:${Math.floor(duration%60)}`}
         </span>
         </div>
   );
 }
 
 export default Song
+
+/*
+true && true && false && true ...
+
+|| 
+false || false || true || false ...
+*/

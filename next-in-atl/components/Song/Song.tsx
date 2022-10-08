@@ -8,7 +8,7 @@ export interface ISongInfo {
     duration: string; 
 }
 
-export interface IProps {
+interface IProps {
     index: number;
     songInfo: ISongInfo;
 }

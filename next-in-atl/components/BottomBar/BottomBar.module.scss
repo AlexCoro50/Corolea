@@ -4,6 +4,7 @@
     background: #444;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .button {
@@ -15,4 +16,12 @@
     color: white;
     background-color: aquamarine;
     border-radius: 256px;
+    cursor: pointer;
+}
+
+.songControlButton {
+    margin-inline: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
 }
